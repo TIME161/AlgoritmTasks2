@@ -68,7 +68,7 @@ public class Main {
         line();
 
         Integer[] text = list.toArray();
-        System.out.println(text[0] +" "+ text[1] +" "+ text[2] +" "+ text[3] +" "+ text[4] +" "+ text[5]);
+        System.out.println(text[0] + " " + text[1] + " " + text[2] + " " + text[3] + " " + text[4] + " " + text[5]);
         line();
 
         list.clear();
@@ -77,6 +77,27 @@ public class Main {
 
         System.out.println(list.isEmpty());
         line();
+
+        Integer[] testingArray = list.generateRandomArray(100000);
+        Integer[] testingArray1 = testingArray.clone();
+        Integer[] testingArray2 = testingArray.clone();
+        Integer[] testingArray3 = testingArray.clone();
+
+        long start1 = System.currentTimeMillis();
+        list.sortBubble(testingArray1);
+        System.out.println(System.currentTimeMillis() - start1);
+
+        long start2 = System.currentTimeMillis();
+        list.sortInsertion(testingArray2);
+        System.out.println(System.currentTimeMillis() - start2);
+
+        long start3 = System.currentTimeMillis();
+        list.sortSelection(testingArray3);
+        System.out.println(System.currentTimeMillis() - start3);
+
+        System.out.println(list.binarySearch(testingArray, 15));
+
+
     }
 
     private static void line() {

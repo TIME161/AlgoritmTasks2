@@ -242,4 +242,41 @@ public class StringArrayListTest {
         assertEquals(expectedMessege, exception.getMessage());
     }
 
+    @Test
+    public void binarySearchTest() {
+        Integer[] testing = new Integer[]{4,6,17};
+        int expectedResult = 1;
+        int actualResult = list.binarySearch(testing, 6);
+        assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    public void sortBubbleTest() {
+        Integer[] testing = new Integer[]{4,17,6};
+        list.sortBubble(testing);
+
+        assertEquals(testing[0], 4);
+        assertEquals(testing[1], 6);
+        assertEquals(testing[2], 17);
+    }
+
+    @Test
+    public void sortSelectionTest() {
+        Integer[] testing = new Integer[]{4,17,6};
+        list.sortSelection(testing);
+
+        assertEquals(testing[0], 4);
+        assertEquals(testing[1], 6);
+        assertEquals(testing[2], 17);
+    }
+
+    @Test
+    public void sortInsertionTest() {
+        Integer[] testing = new Integer[]{4,17,6};
+        list.sortInsertion(testing);
+
+        assertEquals(testing[0], 4);
+        assertEquals(testing[1], 6);
+        assertEquals(testing[2], 17);
+    }
 }
