@@ -96,8 +96,21 @@ public class Main {
         System.out.println(System.currentTimeMillis() - start3);
 
         System.out.println(list.binarySearch(testingArray, 15));
+        line();
 
+        Integer[] binarySearchList = new Integer[6];
 
+        binarySearchList[0] = 26;
+        binarySearchList[1] = 2;
+        binarySearchList[2] = 16;
+        binarySearchList[3] = 28;
+        binarySearchList[4] = 95;
+        binarySearchList[5] = 1;
+
+        for (int i = 0; i < binarySearchList.length; i++) System.out.print(binarySearchList[i] + " ");
+        System.out.println();
+
+        System.out.println(list.binarySearchQuickSort(binarySearchList, 95));
     }
 
     private static void line() {

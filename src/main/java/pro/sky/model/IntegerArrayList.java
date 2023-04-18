@@ -47,7 +47,7 @@ public class IntegerArrayList implements IntegerList {
             throw new IncorrectIndexException("Индекс " + index + " некорректен!");
         }
         if (size == elements.length) {
-            expandCapacity();
+            grow();
         }
         for (int i = size; i > index; i--) {
             elements[i] = elements[i - 1];
@@ -180,6 +180,13 @@ public class IntegerArrayList implements IntegerList {
         elements = newElements;
     }
 
+    private void grow() {
+        int newCapacity = (int) (elements.length * 1.5);
+        Integer[] newElements = new Integer[newCapacity];
+        System.arraycopy(elements, 0, newElements, 0, size);
+        elements = newElements;
+    }
+
     private void alignmentCapacity() {
         int newCapacity = size;
         Integer[] newElements = new Integer[newCapacity];
@@ -261,6 +268,48 @@ public class IntegerArrayList implements IntegerList {
             }
         }
 
+        return -1;
+    }
+
+    public static void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    public static int binarySearchQuickSort(Integer[] arr, int target) {
+        quickSort(arr, 0, arr.length - 1);
+        int left = 0;
+        int right = arr.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] == target) {
+                return mid;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
         return -1;
     }
 }

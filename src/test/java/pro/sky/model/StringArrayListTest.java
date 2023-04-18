@@ -279,4 +279,23 @@ public class StringArrayListTest {
         assertEquals(testing[1], 6);
         assertEquals(testing[2], 17);
     }
+
+    @Test
+    public void binarySearchQuickSortTest() {
+        Integer[] testing = new Integer[]{4,6,17};
+        int expectedResult = 1;
+        int actualResult = list.binarySearchQuickSort(testing, 6);
+        assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    public void quickSortTest() {
+        Integer[] testing = new Integer[]{4,17,6};
+        list.quickSort(testing,0,testing.length-1);
+
+        assertEquals(testing[0], 4);
+        assertEquals(testing[1], 6);
+        assertEquals(testing[2], 17);
+    }
+
 }
