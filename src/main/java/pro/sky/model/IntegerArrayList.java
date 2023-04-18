@@ -5,9 +5,9 @@ import pro.sky.exceptions.AddNullException;
 import pro.sky.exceptions.IncorrectIndexException;
 import pro.sky.exceptions.WrongCapacityException;
 import pro.sky.interfaces.IntegerList;
-
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Random;
 
 public class IntegerArrayList implements IntegerList {
 
@@ -47,7 +47,7 @@ public class IntegerArrayList implements IntegerList {
             throw new IncorrectIndexException("Индекс " + index + " некорректен!");
         }
         if (size == elements.length) {
-            expandCapacity();
+            grow();
         }
         for (int i = size; i > index; i--) {
             elements[i] = elements[i - 1];
@@ -180,6 +180,13 @@ public class IntegerArrayList implements IntegerList {
         elements = newElements;
     }
 
+    private void grow() {
+        int newCapacity = (int) (elements.length * 1.5);
+        Integer[] newElements = new Integer[newCapacity];
+        System.arraycopy(elements, 0, newElements, 0, size);
+        elements = newElements;
+    }
+
     private void alignmentCapacity() {
         int newCapacity = size;
         Integer[] newElements = new Integer[newCapacity];
@@ -193,5 +200,116 @@ public class IntegerArrayList implements IntegerList {
                 "elements=" + Arrays.toString(elements) +
                 ", size=" + size +
                 '}';
+    }
+
+    public static Integer[] generateRandomArray(int size) {
+        Integer[] array = new Integer[size];
+        Random random = new Random();
+        for (int i = 0; i < size; i++) {
+            array[i] = random.nextInt();
+        }
+        return array;
+    }
+
+    private static void swapElements(Integer[] arr, int indexA, int indexB) {
+        int tmp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = tmp;
+    }
+
+    public static void sortBubble(Integer[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swapElements(arr, j, j + 1);
+                }
+            }
+        }
+    }
+
+    public static void sortSelection(Integer[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            int minElementIndex = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[minElementIndex]) {
+                    minElementIndex = j;
+                }
+            }
+            swapElements(arr, i, minElementIndex);
+        }
+    }
+
+    public static void sortInsertion(Integer[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int temp = arr[i];
+            int j = i;
+            while (j > 0 && arr[j - 1] >= temp) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = temp;
+        }
+    }
+
+    public static int binarySearch(Integer[] arr, int key) {
+        sortInsertion(arr);
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (arr[mid] < key) {
+                low = mid + 1;
+            } else if (arr[mid] > key) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+
+        return -1;
+    }
+
+    public static void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    public static int binarySearchQuickSort(Integer[] arr, int target) {
+        quickSort(arr, 0, arr.length - 1);
+        int left = 0;
+        int right = arr.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] == target) {
+                return mid;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
     }
 }
